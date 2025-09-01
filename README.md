@@ -69,5 +69,12 @@ mlflow server -h 0.0.0.0 --default-artifact-root s3://mlflow-test-23
 
 #set uri in your local terminal and in your code 
 export MLFLOW_TRACKING_URI=http://ec2-54-198-108-56.compute-1.amazonaws.com:5000
+
+# creating and activating a virtual environment
+python -m venv venv
+source venv/bin/activate     # Mac/Linux
+venv\Scripts\activate        # Windows
+
+
 ```
 
