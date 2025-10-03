@@ -62,7 +62,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
         # removing the missing values
         df = df.dropna()
         # removing the duplicates
-        df = df.drop_duplicates
+        df = df.drop_duplicates()
         # removing rows with empty strings
         df = df[df["clean_comment"].str.strip() != ""]
 
@@ -76,10 +76,51 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
         raise
 
 
-def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path; str) -> None:
+def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path: str) -> None:
     """save the train and test dataset, creating the raw folder if doesnt exist"""
     try:
         raw_data_path = os.path.join(data_path, "raw")
+
         # create the data directory if it doesnt exit
-        
+        os.makedirs(raw_data_path, exist_ok = True)
+
+        # save the train and test data
+        train_data.to_csv(os.path.join(raw_data_path, "train.csv"), index = False)
+        test_data.to_csv(os.path.join(raw_data_path, "test.csv"), index = False)
+
+        logger.debug("Train and test data saved to %s", raw_data_path)
+
+    except Exception as e:
+        logger.error("unexpected error occurred while saving the data: %s", e)
+        raise
+
+def main():
+    try:
+        # load parameters from the params.yaml in the root directory
+        params = load_params(params_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../params.yaml"))
+        test_size = params["data_ingestion"]["test_size"]
+
+        # load the data from the specific 
+        url = "https://raw.githubusercontent.com/Himanshu-1703/reddit-sentiment-analysis/refs/heads/main/data/reddit.csv"
+        df = load_data(data_url = url)
+
+        # preprocess the data
+        final_df = preprocess_data(df = df)
+
+        # split the data into training and testing sets
+        train_data, test_data = train_test_split(final_df, test_size = test_size, random_state = 42)
+
+        # save the splitted data into the raw folder if it doesn't exist
+        save_data(train_data = train_data, test_data = test_data, data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../data"))
+    
+    except Exception as e:
+        logger.error("Failed to complete the data ingestion processes: %s", e)
+        print(f"Error {e}")
+
+
+if __name__ == "__main__":
+    main()
+
+
+
 
