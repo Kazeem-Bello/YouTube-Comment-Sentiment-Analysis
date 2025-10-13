@@ -137,7 +137,7 @@ def main():
         max_depth = params["model_building"]["max_depth"]
         n_estimators = params["model_building"]["n_estimators"]
 
-        train_df = load_data(os.path.join(root_dir, "data/preprocessed/test_preprocessed.csv"))
+        train_df = load_data(os.path.join(root_dir, "data/preprocessed/train_preprocessed.csv"))
         x_train, y_train = apply_tfidf(train_data = train_df, max_features = max_features, ngram_range = ngram_range)
         best_model = train_lgm(x_train = x_train, y_train = y_train, learning_rate = learning_rate, max_depth = max_depth, n_estimators = n_estimators)
         path = os.path.join(root_dir, "model")

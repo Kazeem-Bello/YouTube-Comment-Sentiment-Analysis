@@ -23,7 +23,7 @@ stages:
     cmd:
       - python src/model/model_building.py
     deps:
-      - data/preprocessed/test_preprocessed.csv
+      - data/preprocessed/train_preprocessed.csv
       - src/model/model_building.py
     params:
       - model_building.ngram_range
@@ -34,6 +34,19 @@ stages:
     outs:
       - tfidf_vectorizer.pkl
       - model
+
+  model_evaluation:
+    cmd:
+      - python src/model/model_evaluation.py
+    deps:
+      - model/model.pkl
+      - tfidf_vectorizer.pkl
+      # - data/preprocessed/train_preprocessed.csv
+      - data/preprocessed/test_preprocessed.csv
+      - src/model/model_evaluation.py
+    outs:
+      - experiment_info.json
+
 
 
 
