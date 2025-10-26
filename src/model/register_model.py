@@ -40,6 +40,7 @@ def register_model(model_name: str, model_info: dict):
     "Register the model to mlflow model registry"
     try:
         model_uri = f"runs:/{model_info['run_id']}/{model_info['model_path']}"
+        # model_uri = model_info['model_path']
         model_version = mlflow.register_model(model_uri, model_name) #register the model
         # transition the model to stagging area
         client = mlflow.tracking.MlflowClient()
@@ -55,7 +56,7 @@ def register_model(model_name: str, model_info: dict):
 
 def main():
     try:
-        model_info_path = "experiment_info.json"
+        model_info_path = "./experiment_info.json"
         model_info = load_model_info(model_info_path)
 
         model_name = "yt_chrome_plugin_model"

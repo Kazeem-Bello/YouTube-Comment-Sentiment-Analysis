@@ -211,3 +211,4 @@ __marimo__/
 /experiment_info.json
 mlruns/
 README copy.md
+/data
