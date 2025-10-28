@@ -1,5 +1,6 @@
 // popup.js
 
+
 document.addEventListener("DOMContentLoaded", async () => {
   const outputDiv = document.getElementById("output");
   const API_KEY = 'AIzaSyA-RTll8HNU6qGZsFk5nw6f0gn_IqMlmGE';  // Replace with your actual YouTube Data API key
@@ -122,6 +123,25 @@ document.addEventListener("DOMContentLoaded", async () => {
       outputDiv.innerHTML = "<p>This is not a valid YouTube URL.</p>";
     }
   });
+
+//   async function loadApi() {
+//     try{
+//       const response = await fetch(`${API_URL}/get_api_key`);
+//       const data = await response.json();
+//       const result = data.api_key;
+//       return result;
+//     } catch (error) {
+//       console.error("Error loading API key");
+//       outputDiv.innerHTML += "<p>Error loading API key</p>";
+//       return null;
+//     }
+//   }
+
+// // Load the API key on startup
+//   (async () => {
+//     API_KEY = await loadApi();
+//     console.log("Loaded API_KEY:", API_KEY);
+//   })();
 
   async function fetchComments(videoId) {
     let comments = [];
