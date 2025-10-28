@@ -16,6 +16,14 @@ jobs:
     name: Continuous Integration
     runs-on: ubuntu-latest
     steps:
+      - name: Free up disk space
+        run: |
+          echo "Before cleanup:"
+          df -h
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          echo "After cleanup:"
+          df -h
+
       - name: Checkout Code
         uses: actions/checkout@v3
 
