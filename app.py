@@ -87,7 +87,7 @@ def load_model_vectorizer(model_path: str, vectorizer_path: str):
         vectorizer = pickle.load(f)
     return model, vectorizer
 
-model, vectorizer= load_model_vectorizer("./model/model.pkl", "./tfidf_vectorizer.pkl")
+model, vectorizer= load_model_vectorizer("/model/model.pkl", "/tfidf_vectorizer.pkl")
 
 @app.route("/get_api_key")
 def get_api_key():
