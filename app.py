@@ -20,6 +20,7 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
+# d
 
 app = Flask(__name__)
 CORS(app)  #Enable CORS for all routes
