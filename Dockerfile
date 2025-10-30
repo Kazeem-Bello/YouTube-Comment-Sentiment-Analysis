@@ -1,5 +1,7 @@
 FROM python:3.11-slim-buster
 
+RUN apt-get update && apt-get install -y libgomp1
+
 WORKDIR /app
 
 COPY . /app
