@@ -53,6 +53,7 @@ def preprocess_comment(comment):
         print(f"Error in preprocessing comment: {e}")
         raise
 
+root_dir = os.getcwd()
 
 # load the model and vectorizer from the model registry 
 # def load_model_and_vectorizer(model_name: str, model_version: str, vectorizer_path: str):
@@ -76,6 +77,7 @@ def preprocess_comment(comment):
 
 
 # load the model and vectorizer from local storage 
+
 def load_model_vectorizer(model_path: str, vectorizer_path: str):
     if not os.path.exists(vectorizer_path):
             raise FileNotFoundError(f"Vectorizer file not found at {vectorizer_path}")
@@ -87,7 +89,9 @@ def load_model_vectorizer(model_path: str, vectorizer_path: str):
         vectorizer = pickle.load(f)
     return model, vectorizer
 
-model, vectorizer= load_model_vectorizer("model/model.pkl", "tfidf_vectorizer.pkl")
+model_path = os.path.join(root_dir, "model", "model.pkl")
+vectorizer_path = os.path.join(root_dir, "tfidf_vectorizer.pkl")
+model, vectorizer= load_model_vectorizer(model_path, vectorizer_path)
 
 @app.route("/get_api_key")
 def get_api_key():
