@@ -5,12 +5,19 @@
   "description": "Analyzes YouTube video comments for sentiment.",
   "action": {
     "default_popup": "popup.html"
+    // "default_icon": {
+    //   "16": "icon16.png",
+    //   "48": "icon48.png",
+    //   "128": "icon128.png"
+    // }
   },
   "permissions": [
     "tabs",
     "activeTab",
-    "scripting",
-    "http://localhost/*",
-    "https://www.googleapis.com/*"
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.googleapis.com/*",
+    "http://13.60.66.106:8080/*"
   ]
 }

@@ -331,7 +331,7 @@ def generate_trend_graph():
         plt.close()
 
         # Return the image as a response
-        return send_file(img_io, mimetype='image/png')
+        return send_file(img_io, mimetype='image/png') 
     except Exception as e:
         app.logger.error(f"Error in /generate_trend_graph: {e}")
         return jsonify({"error": f"Trend graph generation failed: {str(e)}"}), 500
@@ -342,4 +342,4 @@ def generate_trend_graph():
 
 
 if __name__ == "__main__":
-    app.run(host = "0.0.0.0", port = 5002, debug = True)
+    app.run(host = "0.0.0.0", port = 8080, debug = True)
