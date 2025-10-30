@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Free up disk space
         run: |
-          echo "Before cleanup:"
+          echo "Before cleanup:-"
           df -h
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
           sudo apt-get clean
