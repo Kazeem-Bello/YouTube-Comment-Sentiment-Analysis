@@ -8,4 +8,6 @@ COPY . /app
 
 RUN pip install -r requirements.txt
 
+RUN python3 -m nltk.downloader stopwords wordnet omw-1.4
+
 CMD ["python3", "app.py"]
