@@ -55,39 +55,39 @@ def preprocess_comment(comment):
 
 
 # load the model and vectorizer from the model registry 
-def load_model_and_vectorizer(model_name: str, model_version: str, vectorizer_path: str):
-    try: 
-        # mlflow.set_tracking_uri("")
-        client = MlflowClient()
-        model_uri = f"models:/{model_name}/{model_version}"
-        model = mlflow.pyfunc.load_model(model_uri)
-        if not os.path.exists(vectorizer_path):
-            raise FileNotFoundError(f"Vectorizer file not found at {vectorizer_path}")
-        with open (vectorizer_path, "rb") as f:
-            vectorizer = pickle.load(f)
+# def load_model_and_vectorizer(model_name: str, model_version: str, vectorizer_path: str):
+#     try: 
+#         # mlflow.set_tracking_uri("")
+#         client = MlflowClient()
+#         model_uri = f"models:/{model_name}/{model_version}"
+#         model = mlflow.pyfunc.load_model(model_uri)
+#         if not os.path.exists(vectorizer_path):
+#             raise FileNotFoundError(f"Vectorizer file not found at {vectorizer_path}")
+#         with open (vectorizer_path, "rb") as f:
+#             vectorizer = pickle.load(f)
 
-        return model, vectorizer
-    except Exception as e:
-        print(f"Error loading model and vectorizer: {e}")
-        raise
+#         return model, vectorizer
+#     except Exception as e:
+#         print(f"Error loading model and vectorizer from mlflow: {e}")
+#         raise
 
-# Initialize the model and vectorizer
-model, vectorizer = load_model_and_vectorizer("yt_chrome_plugin_model", "11", "./tfidf_vectorizer.pkl")
+# # Initialize the model and vectorizer
+# model, vectorizer = load_model_and_vectorizer("yt_chrome_plugin_model", "11", "./tfidf_vectorizer.pkl")
 
 
 # load the model and vectorizer from local storage 
-# def load_model_vectorizer(model_path: str, vectorizer_path: str):
-#     if not os.path.exists(vectorizer_path):
-#             raise FileNotFoundError(f"Vectorizer file not found at {vectorizer_path}")
-#     if not os.path.exists(model_path):
-#             raise FileNotFoundError(f"model file not found at {model_path}")
-#     with open (model_path, "rb") as f:
-#         model = pickle.load(f)
-#     with open (vectorizer_path, "rb") as f:
-#         vectorizer = pickle.load(f)
-#     return model, vectorizer
+def load_model_vectorizer(model_path: str, vectorizer_path: str):
+    if not os.path.exists(vectorizer_path):
+            raise FileNotFoundError(f"Vectorizer file not found at {vectorizer_path}")
+    if not os.path.exists(model_path):
+            raise FileNotFoundError(f"model file not found at {model_path}")
+    with open (model_path, "rb") as f:
+        model = pickle.load(f)
+    with open (vectorizer_path, "rb") as f:
+        vectorizer = pickle.load(f)
+    return model, vectorizer
 
-# model, vectorizer= load_model_vectorizer("./model/model.pkl", "./tfidf_vectorizer.pkl")
+model, vectorizer= load_model_vectorizer("./model/model.pkl", "./tfidf_vectorizer.pkl")
 
 @app.route("/get_api_key")
 def get_api_key():
