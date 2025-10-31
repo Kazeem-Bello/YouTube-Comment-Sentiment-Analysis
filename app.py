@@ -74,7 +74,7 @@ root_dir = os.getcwd()
 #         raise
 
 # # Initialize the model and vectorizer
-# model, vectorizer = load_model_and_vectorizer("yt_chrome_plugin_model", "11", "./tfidf_vectorizer.pkl")
+# model, vectorizer = load_model_and_vectorizer("yt_chrome_plugin_model", "11", "model/tfidf_vectorizer.pkl")
 
 
 # load the model and vectorizer from local storage 
@@ -91,7 +91,7 @@ def load_model_vectorizer(model_path: str, vectorizer_path: str):
     return model, vectorizer
 
 model_path = os.path.join(root_dir, "model", "model.pkl")
-vectorizer_path = os.path.join(root_dir, "tfidf_vectorizer.pkl")
+vectorizer_path = os.path.join(root_dir,  "model", "tfidf_vectorizer.pkl")
 model, vectorizer= load_model_vectorizer(model_path, vectorizer_path)
 
 @app.route("/get_api_key")

@@ -59,7 +59,7 @@ def load_data(file_path: str)-> pd.DataFrame:
         logger.error("unexpected error occur while loading the data, %s", e)
         raise
 
-def apply_tfidf(train_data:pd.DataFrame, max_features: int, ngram_range: tuple) -> tuple:
+def apply_tfidf(train_data:pd.DataFrame, max_features: int, ngram_range: tuple, file_path: str) -> tuple:
     """Apply Tf-IDF with ngrams to the data"""
     try:
         vectorizer = TfidfVectorizer(max_features = max_features, ngram_range = ngram_range)
@@ -71,7 +71,8 @@ def apply_tfidf(train_data:pd.DataFrame, max_features: int, ngram_range: tuple) 
         logger.debug("TF-idf transformation complete, train shape: %s", x_train_tfidf.shape)
 
         # save the vectorizer in the root directory
-        with open(os.path.join(get_root_directory(), "tfidf_vectorizer.pkl"), "wb") as f:
+        # with open(os.path.join(get_root_directory(), "tfidf_vectorizer.pkl"), "wb") as f:
+        with open(file_path, "wb") as f:
             pickle.dump(vectorizer, f)
 
         logger.debug("TF-IDF applied with trigrams and data transformed")
@@ -136,12 +137,12 @@ def main():
         learning_rate = params["model_building"]["learning_rate"]
         max_depth = params["model_building"]["max_depth"]
         n_estimators = params["model_building"]["n_estimators"]
-
-        train_df = load_data(os.path.join(root_dir, "data/preprocessed/train_preprocessed.csv"))
-        x_train, y_train = apply_tfidf(train_data = train_df, max_features = max_features, ngram_range = ngram_range)
-        best_model = train_lgm(x_train = x_train, y_train = y_train, learning_rate = learning_rate, max_depth = max_depth, n_estimators = n_estimators)
         path = os.path.join(root_dir, "model")
         os.makedirs(path, exist_ok = True)
+
+        train_df = load_data(os.path.join(root_dir, "data/preprocessed/train_preprocessed.csv"))
+        x_train, y_train = apply_tfidf(train_data = train_df, max_features = max_features, ngram_range = ngram_range, file_path = os.path.join(path,"tfidf_vectorizer.pkl"))
+        best_model = train_lgm(x_train = x_train, y_train = y_train, learning_rate = learning_rate, max_depth = max_depth, n_estimators = n_estimators)
         save_model(model = best_model, file_path = os.path.join(path, "model.pkl"))
     except Exception as e:
         logger.error(f"failed to complete model building: {e}")
